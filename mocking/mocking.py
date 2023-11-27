@@ -3,6 +3,7 @@ docstring
 """
 import os
 import argparse
+import yaml
 
 parser = argparse.ArgumentParser(
     prog="mocking",
@@ -30,11 +31,11 @@ def main():
     args = parser.parse_args()
     filepath = find_file(args.filename)
     if filepath is not None:
-        with open(filepath, "r", encoding="utf8") as text:
-            names = [line.rstrip() for line in text]
+        with open(filepath, "r") as file:
+            parsed = yaml.safe_load(file)
     else:
         raise ValueError(f"filepath {filepath} not found")
-    print(names)
+    print(parsed)
 
 
 if __name__ == "__main__":
