@@ -4,6 +4,10 @@ docstring
 import os
 import argparse
 import yaml
+from icecream import ic
+from mocking.builder.generators import make_string
+
+from builder.builder import Builder
 
 parser = argparse.ArgumentParser(
     prog="mocking",
@@ -32,10 +36,15 @@ def main():
     filepath = find_file(args.filename)
     if filepath is not None:
         with open(filepath, "r") as file:
-            parsed = yaml.safe_load(file)
+            config = yaml.safe_load(file)
     else:
         raise ValueError(f"filepath {filepath} not found")
-    print(parsed)
+    print(config)
+
+    df_builder = Builder()
+    df_builder.parse_config(config)
+    df = df_builder.make_df()
+    ic(df.head())
 
 
 if __name__ == "__main__":

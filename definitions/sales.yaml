@@ -1,4 +1,4 @@
-rowcount: 50
+rows: 50
 columns:
 - product: str
 - location: str
